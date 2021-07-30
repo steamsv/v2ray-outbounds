@@ -1,0 +1,76 @@
+//仅代理Telegram IP,其它全部丢弃
+
+
+
+{
+    "inbound": {
+        "allocate": {
+            "strategy": "always"
+        },
+        "listen": "0.0.0.0",
+        "port": 8090,
+        "protocol": "vmess",
+        "settings": {
+            "clients": [
+                {
+                    "id" : "179c0060-9c92-3dd4-013a-aba0dbc39054",
+                    "alterId" : 0
+                }
+            ],
+            "udp": true
+        },
+        "sniffing": {
+            "destOverride": [
+                "http",
+                "tls"
+            ],
+            "enabled": true
+        },
+        "streamSettings": {
+            "network": "ws",
+            "security": "auto",
+            "wsSettings": {
+                "connectionReuse": true,
+                "path": "/v2ray/"
+            }
+        },
+        "tag": "proxy"
+    },
+    "log": {
+        "access": "/var/log/v2ray/access.log",
+        "error": "/var/log/v2ray/error.log",
+        "loglevel": "warning"
+    },
+    "outbounds": [
+        {
+            "protocol": "blackhole",
+            "settings": {}
+        },
+        {
+            "tag": "tg",
+            "protocol": "freedom",
+            "settings": {}
+        }
+    ],
+    "routing": {
+        "domainStrategy": "IPOnDemand",
+        "rules": [
+            {
+                "type": "field",
+                "ip": [
+                    "91.108.4.0/22",
+                    "91.108.8.0/22",
+                    "91.108.12.0/22",
+                    "91.108.20.0/22",
+                    "91.108.36.0/23",
+                    "91.108.38.0/23",
+                    "91.108.56.0/22",
+                    "149.154.160.0/20",
+                    "149.154.164.0/22",
+                    "149.154.172.0/22"
+                ],
+                "outboundTag": "tg"
+            }
+        ]
+    }
+}
